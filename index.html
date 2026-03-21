@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JARVIS AI Assistant</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="JARVIS AI">
+    <meta name="application-name" content="JARVIS AI">
+    <meta name="description" content="Siri-like AI assistant with auto mic and bilingual support">
+    <meta name="theme-color" content="#0a0e27">
+    <meta name="background-color" content="#0a0e27">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9InVybCgjZ3JhZDApIi8+CjxjaXJjbGUgY3g9Ijk2IiBjeT0iNzIiIHI9IjQwIiBmaWxsPSJ1cmwoI2dyYWQxKSIvPgo8Y2lyY2xlIGN4PSI5NiIgY3k9IjcyIiByPSIyNSIgZmlsbD0idXJsKCNncmFkMikiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZDAiIHgxPSIwIiB5MT0iMCIgeDI9IjE5MiIgeTI9IjE5MiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMEEwRTI3Ii8+CjxzdG9wIG9mZnNldD0iMC41IiBzdG9wLWNvbG9yPSIjMUExRjNBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzBGMDE0OSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQxIiBjeD0iOTYiIGN5PSI3MiIgcj0iNDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzAwRkZGRiIgc3RvcC1vcGFjaXR5PSIwLjIiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDA5NkZGIiBzdG9wLW9wYWNpdHk9IjAuMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQyIiBjeD0iOTYiIGN5PSI3MiIgcj0iMjUiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzAwRkZGRiIgc3RvcC1vcGFjaXR5PSIwLjgiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDA5NkZGIiBzdG9wLW9wYWNpdHk9IjAuNCIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').then(registration => {
+                console.log('ServiceWorker registration successful');
+            }).catch(err => {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        }
+    </script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="language-switcher">
+            <button class="lang-btn active" id="langMs" data-lang="ms">Bahasa Melayu</button>
+            <button class="lang-btn" id="langEn" data-lang="en">English</button>
+        </div>
+
+        <!-- Jarvis Header -->
+        <div class="jarvis-header">
+            <div class="jarvis-logo">
+                <div class="logo-circle">
+                    <div class="logo-inner"></div>
+                </div>
+                <h1>JARVIS</h1>
+                <p class="status" id="status">Bersedia untuk mendengar...</p>
+            </div>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-message jarvis-message">
+                <div class="message-content">
+                    <div class="jarvis-avatar">J</div>
+                    <div class="message-text">
+                        <p data-ms="Halo! Saya JARVIS, pembantu AI anda. Saya boleh membantu anda dengan pelbagai perkara. Cuba klik butang mikrofon atau taip mesej anda." data-en="Hello! I'm JARVIS, your AI assistant. I can help you with various things. Try clicking the microphone button or type your message.">Halo! Saya JARVIS, pembantu AI anda. Saya boleh membantu anda dengan pelbagai perkara. Cuba klik butang mikrofon atau taip mesej anda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <div class="input-container">
+                <input type="text" id="textInput" placeholder="Taip mesej anda atau gunakan mikrofon..." autocomplete="off" data-placeholder-ms="Taip mesej anda atau gunakan mikrofon..." data-placeholder-en="Type your message or use microphone...">
+                <div class="button-group">
+                    <button class="btn-auto-mic" id="autoMicButton" title="Auto Mic" data-title-ms="Auto Mikrofon" data-title-en="Auto Mic">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <circle cx="12" cy="12" r="6" fill="none"></circle>
+                        </svg>
+                        <span class="auto-mic-indicator">AUTO</span>
+                    </button>
+                    <button class="btn-microphone" id="micButton" title="Klik untuk bercakap" data-title-ms="Klik untuk bercakap" data-title-en="Click to speak">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
+                </button>
+                <button class="btn-send" id="sendButton" title="Hantar mesej" data-title-ms="Hantar mesej" data-title-en="Send message">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+            <div class="voice-status" id="voiceStatus"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
